@@ -1,0 +1,14 @@
+/pipecat
+/rnnoise-wasm
+/rnnoise
+
+/frontend/node_modules
+/frontend/.next
+/frontend/.env
+/frontend/.env.local
+
+/backend/node_modules
+/backend/.env
+/backend/.env.local
+/backend/.next
+/backend/.nuxt
