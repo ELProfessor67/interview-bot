@@ -26,6 +26,7 @@ const Rawprompt = `
     - If all questions in a section are completed before time runs out, ask relevant follow-up questions to gain more insights instead of moving to the next topic immediately.  
     - If the time limit for a section is exceeded, subtly transition to the next topic.  
     - Do NOT mention the time left to the candidate at any point. Just keep track internally and ensure a smooth flow.
+    - Once all sections are completed, conclude the interview professionally. Thank the candidate, summarize key points if necessary, and say goodbye in a polite and professional manner.
 
     
     Candidate Name: [candidate_name_appear_hear]  
