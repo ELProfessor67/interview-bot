@@ -7,8 +7,9 @@ import { audioContext, base64ToArrayBuffer } from '@/lib/utils';
 import { AudioStreamer } from '@/services/audioStreamer';
 import VolMeterWorket from '@/services/workers/volMeter';
 import AudioPulse from '@/components/AudioPulse';
-import { VideoSDKNoiseSuppressor } from "@videosdk.live/videosdk-media-processor-web";
+// import { VideoSDKNoiseSuppressor } from "@videosdk.live/videosdk-media-processor-web";
 import { useStateContext } from '@/contexts/StateContext';
+
 
 const App = () => {
   const [isAISpeaking, setIsAISpeaking] = useState(false);
@@ -19,7 +20,8 @@ const App = () => {
   const streamRef = useRef(null);
   const [volume, setVolume] = useState(0);
   const audioStreamerRef = useRef(null);
-  const noiseProcessor = new VideoSDKNoiseSuppressor();
+  // const noiseProcessor = new VideoSDKNoiseSuppressor.VideoSDKNoiseSuppressor();
+  const noiseProcessor = useRef(null);
   const { sections, finalPrompt } = useStateContext();
   const [transcriptions, setTranscriptions] = useState([]);
 
@@ -40,6 +42,17 @@ const App = () => {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   };
+
+
+
+  useEffect(() => {
+    async function loadNoiseSuppressor() {
+      const module = await import("@videosdk.live/videosdk-media-processor-web");
+      noiseProcessor.current = new module.VideoSDKNoiseSuppressor();
+    }
+
+    loadNoiseSuppressor();
+  }, []);
 
 
   useEffect(() => {
@@ -155,7 +168,7 @@ const App = () => {
       }
     });
 
-    const processedStream = await noiseProcessor.getNoiseSuppressedAudioStream(
+    const processedStream = await noiseProcessor.current.getNoiseSuppressedAudioStream(
       streamRef.current
     );
 
